@@ -11,6 +11,8 @@ out/
 
 ## VS Code
 .vscode/
+.vs/
+
 
 ## Visual Studio for Mac
 .idea/
