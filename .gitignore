@@ -1,0 +1,66 @@
+## Build Results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## VS Code
+.vscode/
+
+## Visual Studio for Mac
+.idea/
+*.userprefs
+
+## DotCover
+.idea/
+*.dotCover
+
+## Rider
+.idea/
+*.sln.iml
+
+## Logs
+*.log
+logs/
+*.tlog
+
+## Entity Framework
+Migrations/
+
+## Database Files
+*.mdf
+*.ldf
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## Publish Output
+publish/
+*.publish.xml
+
+## Secrets (UserSecrets, do not commit them)
+secrets.json
+
+## Local Settings
+appsettings.Development.json
+
+## Image Uploads (Optional, adjust if storing uploaded images)
+wwwroot/uploads/
+
+## npm / node (if using with SPA or tooling)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+## Git
+*.orig
+
+## Others
+.DS_Store
+Thumbs.db
+desktop.ini
