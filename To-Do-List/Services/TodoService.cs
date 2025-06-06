@@ -1,4 +1,6 @@
-﻿using To_Do_List.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using To_Do_List.Data;
 using To_Do_List.Models;
 using To_Do_List.Models.DTOS;
 
@@ -8,10 +10,12 @@ namespace To_Do_List.Services
     {
         private readonly AppDbContext _context;
         private readonly ILogger<TodoService> _logger;
+        //private readonly ResponseDto _responseDto;
         public TodoService(AppDbContext context, ILogger<TodoService> logger)
         {
             _context = context;
             _logger = logger;
+            //_responseDto = new ResponseDto();
         }
         public async Task<ResponseDto> CreateTodoItem(CreateTodoItemDto itemDto)
         {
@@ -42,25 +46,39 @@ namespace To_Do_List.Services
                
             
         }
+        public async Task<ResponseDto> GetAllTodoItems()
+        {
+            var items = await _context.TodoItems.ToListAsync();
+            if (items.IsNullOrEmpty())
+            {
+                return new ResponseDto { IsSuccess = false, Message="Item List is currently empty, add new items....", Result=items };
+            }
+            return new ResponseDto { IsSuccess=true, Message="Here is what we found", Result = items };
+        }
 
-        public Task<ResponseDto> DeleteTodoItem(Guid id)
+               
+
+        public Task<ResponseDto> GetTodoItem(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<TodoItem>> GetAllTodoItems()
+        public Task<ResponseDto> UpdateTodoItem(Guid id)
         {
             throw new NotImplementedException();
+        }
+        public async Task<ResponseDto> DeleteTodoItem(Guid id)
+        {
+            var foundItem = await _context.TodoItems.FindAsync(id);
+            if (foundItem == null)
+            {
+                return new ResponseDto { Message = "No items were found with that Id", IsSuccess=false};
+            }
+            _context.TodoItems.Remove(foundItem);
+            await _context.SaveChangesAsync();
+
+            return new ResponseDto { IsSuccess = true, Message="Item has been deleted" };
         }
 
-        public Task<TodoItem> GetTodoItem(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TodoItem> UpdateTodoItem(Guid id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
