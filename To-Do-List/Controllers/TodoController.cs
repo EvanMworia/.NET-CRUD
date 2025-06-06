@@ -46,5 +46,52 @@ namespace To_Do_List.Controllers
                 return BadRequest(_responseDto.Message = $"{ex.Message}");
             }
         }
+        [HttpGet]
+        public async Task<ActionResult<ResponseDto>> GetTodoItems()
+        {
+            try
+            {
+                var res= await _todoService.GetAllTodoItems();
+                if (!res.IsSuccess)
+                {
+                    return NotFound(res);
+                }
+                return Ok(res);
+                
+            }
+            catch (Exception ex)
+            {
+
+                if (ex.InnerException != null)
+                {
+                    return BadRequest(_responseDto.Message = $"RootCause: {ex.InnerException.Message}");
+                }
+                return BadRequest(_responseDto.Message = $"Server Error: {ex.Message}");
+            }
+        }
+
+
+        [HttpDelete]
+        public async Task<ActionResult<ResponseDto>> DeleteTodoItem(Guid id)
+        {
+            try
+            {
+                var res = await _todoService.DeleteTodoItem(id);
+                if (!res.IsSuccess)
+                {
+                    return NotFound(res);
+                }
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+
+                if (ex.InnerException != null)
+                {
+                    return BadRequest(_responseDto.Message = $"RootCause: {ex.InnerException.Message}");
+                }
+                return BadRequest(_responseDto.Message = $"Server Error: {ex.Message}");
+            }
+        }
     }
 }
