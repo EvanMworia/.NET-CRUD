@@ -8,7 +8,7 @@ namespace To_Do_List.Services
         Task<ResponseDto> CreateTodoItem(CreateTodoItemDto item);
         Task<ResponseDto> GetAllTodoItems();
         Task<ResponseDto> GetTodoItem(Guid id);
-        Task<ResponseDto> UpdateTodoItem(Guid id);
+        Task<ResponseDto> UpdateTodoItem(Guid id, CreateTodoItemDto updatedItemdto);
         Task<ResponseDto> DeleteTodoItem(Guid id);
 
     }
