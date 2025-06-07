@@ -70,6 +70,32 @@ namespace To_Do_List.Controllers
             }
         }
 
+        [HttpPatch]
+        public async Task<ActionResult<ResponseDto>> UpdateTodoItem(Guid id, [FromBody] CreateTodoItemDto dto)
+        {
+            try
+            {
+                var res = await _todoService.UpdateTodoItem(id, dto);
+                if (!res.IsSuccess) 
+                {   
+                    return BadRequest(res);
+                
+                }
+                return Ok(res);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                if (ex.InnerException != null)
+                {
+                    return BadRequest(_responseDto.Message = $"RootCause: {ex.InnerException.Message}");
+                }
+                return BadRequest(_responseDto.Message = $"Server Error: {ex.Message}");
+            }
+
+        }
 
         [HttpDelete]
         public async Task<ActionResult<ResponseDto>> DeleteTodoItem(Guid id)
