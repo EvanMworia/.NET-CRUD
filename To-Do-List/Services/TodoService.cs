@@ -63,9 +63,24 @@ namespace To_Do_List.Services
             throw new NotImplementedException();
         }
 
-        public Task<ResponseDto> UpdateTodoItem(Guid id)
+        public async Task<ResponseDto> UpdateTodoItem(Guid id, CreateTodoItemDto updatedItem)
         {
-            throw new NotImplementedException();
+            var foundItem = await _context.TodoItems.FindAsync(id);
+            if (foundItem == null)
+            {
+                return new ResponseDto { IsSuccess = false, Message = "No item was found with that id" };
+            }
+            foundItem.Title = updatedItem.Title;
+            foundItem.DueDate = updatedItem.DueDate;
+            foundItem.Status = updatedItem.Status;
+            if (foundItem.DueDate < DateTime.UtcNow)
+            {
+
+                return new ResponseDto { IsSuccess = false, Message = "Due Date cannot be in the past of current date/time" };
+
+            }
+            await _context.SaveChangesAsync();
+            return new ResponseDto { IsSuccess = true, Message=$"Item id  has been updated", Result = foundItem };
         }
         public async Task<ResponseDto> DeleteTodoItem(Guid id)
         {
