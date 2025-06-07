@@ -18,7 +18,7 @@ namespace To_Do_List.Controllers
             _responseDto = new ResponseDto();
 
         }
-        [HttpPost]
+        [HttpPost("createNewTodo")]
         public async Task<ActionResult<ResponseDto>> CreateNewItem([FromBody] CreateTodoItemDto itemDto)
         {
 
@@ -46,7 +46,7 @@ namespace To_Do_List.Controllers
                 return BadRequest(_responseDto.Message = $"{ex.Message}");
             }
         }
-        [HttpGet]
+        [HttpGet("GetAllTodos")]
         public async Task<ActionResult<ResponseDto>> GetTodoItems()
         {
             try
@@ -70,7 +70,7 @@ namespace To_Do_List.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPatch("update/{id}")]
         public async Task<ActionResult<ResponseDto>> UpdateTodoItem(Guid id, [FromBody] CreateTodoItemDto dto)
         {
             try
@@ -97,7 +97,7 @@ namespace To_Do_List.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult<ResponseDto>> DeleteTodoItem(Guid id)
         {
             try
